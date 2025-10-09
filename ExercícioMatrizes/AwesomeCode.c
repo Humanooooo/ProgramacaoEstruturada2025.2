@@ -50,17 +50,6 @@ void calcularSomatorioLinhas(
   }
 }
 
-void calcularSomatorioColunas(
-  int m[][QTD_COLUNAS], int qtdLinhas, int qtdColunas, int vs[]
-) {
-    for (int c = 0; c < qtdColunas; c += 1) {
-        vs[c] += m[l][c];
-        for (int l = 0; l < qtdLinhas; l += 1) {
-            vs[c] = 0;
-        }
-    }
-}
-
 void imprimirVetor(int vetor[], int tam) {
   for (int i = 0; i < tam; i += 1) {
     printf("%3d ", vetor[i]);
