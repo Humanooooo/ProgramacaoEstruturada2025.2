@@ -1,0 +1,21 @@
+#include <stdio.h>
+
+int main() {
+
+}
+
+do {
+    printf("\n\nMENU\n");
+    printf("1. Cadastrar novo produto\n");
+    printf("2. Alterar valor unitário\n");
+    printf("3. Informar valor unitário\n");
+    printf("4. Quantidade do produto em estoque\n");
+    printf("5. Realizar venda\n");
+    printf("6. Atualizar a quantidade em estoque\n");
+    printf("7. Exibir código e a descrição dos produtos\n");
+    printf("8. Exibir código e descrição dos produtos fora de estoque\n");
+    printf("9. Sair\n");
+    printf("Escolha uma opção: ");
+}
+
+struct 
