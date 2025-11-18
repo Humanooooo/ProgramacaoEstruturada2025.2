@@ -19,8 +19,6 @@ int preco; // representa um valor numérico com 2 casas decimais
 void lerStr(char str[], int tam);
 void preencherCategoria(struct Categoria *c);
 void preencherProduto(struct Produto *p, struct Categoria categorias[], int qtdCategorias);
-void imprimirProduto(struct Produto p, struct Categoria categorias[], int qtdCategorias);
-int encontrarCategoria(struct Categoria categorias[], int qtdCategorias, int codigoCategoria);
 void selectionSortPorDescricao(struct Produto v[], int qtd);
 
 selectionSortPorDescricao(struct Produto v[], int qtd) {
