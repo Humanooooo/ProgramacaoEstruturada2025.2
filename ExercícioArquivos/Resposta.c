@@ -165,3 +165,84 @@ void buscarNumero(char nomeArq[]) {
   fclose(arq);
 }
 
+void substituirnumero(char nomeArq[]) {
+  double num, valorAntigo, valorNovo;
+  int status, encontrado = 0;
+  FILE *arq = fopen(nomeArq, "r+b");
+  if (arq == NULL) {
+    printf("Não pode abrir o arquivo!\n");
+    return;
+  }
+
+  printf("Digite o número que cê quer substituir: ");
+  scanf("%lf", &valorAntigo);
+  printf("Digite o novo número: ");
+  scanf("%lf", &valorNovo);
+
+  status = fread(&num, sizeof(double), 1, arq);
+  while (!feof(arq)) {
+    if (status == 1 && num == valorAntigo) {
+      encontrado = 1;
+      fseek(arq, -sizeof(double), SEEK_CUR);
+      fwrite(&valorNovo, sizeof(double), 1, arq);
+      break;
+    }
+    status = fread(&num, sizeof(double), 1, arq);
+  }
+
+  if (encontrado) {
+    printf("Número substituído com sucesso!\n");
+  } else {
+    printf("Número não encontrado no arquivo!\n");
+  }
+  fclose(arq);
+}
+
+void excluirNumero(char nomeArq[]) { 
+  double num, valorExcluir;
+  int encontrado = 0;
+  char tmpName[TAM];
+  FILE *arq = fopen(nomeArq, "rb");
+  if (arq == NULL) {
+    printf("Não pode abrir o arquivo!\n");
+    return;
+  }
+
+  snprintf(tmpName, TAM, "%s.tmp", nomeArq);
+  FILE *tmp = fopen(tmpName, "wb");
+  if (tmp == NULL) {
+    printf("Não foi possível criar arquivo temporário!\n");
+    fclose(arq);
+    return;
+  }
+
+  printf("Digite o número que cê quer excluir: ");
+  scanf("%lf", &valorExcluir);
+
+  while (fread(&num, sizeof(double), 1, arq) == 1) {
+    if (!encontrado && num == valorExcluir) {
+      encontrado = 1;
+      continue;
+    }
+    fwrite(&num, sizeof(double), 1, tmp);
+  }
+
+  fclose(arq);
+  fclose(tmp);
+
+  if (encontrado) {
+    if (remove(nomeArq) != 0) {
+      printf("Erro ao apagar o arquivo original!\n");
+      remove(tmpName);
+      return;
+    }
+    if (rename(tmpName, nomeArq) != 0) {
+      printf("Erro ao renomear arquivo temporário!\n");
+      return;
+    }
+    printf("Número excluído com sucesso!\n");
+  } else {
+    remove(tmpName);
+    printf("Número não encontrado no arquivo!\n");
+  }
+}
